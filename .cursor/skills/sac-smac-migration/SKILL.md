@@ -1,3 +1,8 @@
+---
+name: sac-smac-migration
+description: Comprehensive reference for migrating reporting views from SAC (reporting_layer.sac_prod_seafarer_public.*) to SMAC (reporting_layer.smac_prod.*) for Synergy Marine's crewing system. Use when migrating SAC tables to SMAC, finding SMAC equivalents, writing SMAC queries, or validating migrated tables.
+---
+
 # SAC to SMAC Migration Skill
 
 Comprehensive reference for migrating reporting views from SAC (`reporting_layer.sac_prod_seafarer_public.*`) to SMAC (`reporting_layer.smac_prod.*`) for Synergy Marine's crewing system.
@@ -10,7 +15,7 @@ Comprehensive reference for migrating reporting views from SAC (`reporting_layer
 
 ## Playbook & Mapping Files
 
-This file lives in: `/Workspace/Users/niranjan.r@synergyship.com/smac-migration-playbook/Latest/`
+This file lives in: `/Workspace/Shared/smac-migration-playbook/Latest/`
 
 ### SAC Source Notebook
 The SAC views are defined in: `/Data_Hub/SAC_Views/SAC TABLES SET -1`
@@ -42,10 +47,10 @@ The assistant will then automatically load it when working on SAC-to-SMAC migrat
 - Filter `WHERE deleted_at IS NULL` on all SMAC source tables
 
 ### Step 4: Validate
-- Compare row counts (target: 90-110% ratio — **except `revised_base_view`**: 46.7% is expected)
+- Compare row counts (target: 90-110% ratio)
 - Find overlapping crew codes and spot-check on composite keys
 - Categorize mismatches: UUID/INT (expected), case/format (cosmetic), true differences
-- **Before flagging mismatches:** read table-specific validation notes in `SMAC Migration/Validation Docs/` — several SAC views have known bugs where SMAC is correct
+- **Before flagging mismatches:** read table-specific validation notes below — several SAC views have known bugs where SMAC is correct
 
 ---
 
@@ -53,21 +58,65 @@ The assistant will then automatically load it when working on SAC-to-SMAC migrat
 
 | Table | Doc | When to read |
 |-------|-----|--------------|
-| `revised_base_view` | `revised_base_view_validation_notes.md` | Expected mismatches, row-count gap, exclusion list |
-| `revised_base_view` (columns) | `revised_base_view_column_mapping.md` | Per-column SAC→SMAC source mapping |
-| `revised_relief_view` | `revised_relief_view_validation_notes.md` | Relief / planner relief-side columns |
+| `revised_base_view` | `SMAC Migration/Validation Docs/revised_base_view_validation_notes.md` | **Read first** — expected mismatches, row-count gap, exclusion list |
+| `revised_base_view` (columns) | `SMAC Migration/Validation Docs/revised_base_view_column_mapping.md` | Per-column SAC→SMAC source mapping |
+| `revised_relief_view` | `SMAC Migration/Validation Docs/revised_relief_view_validation_notes.md` | Relief view or planner relief-side columns |
 
 ---
 
-## revised_base_view — Known Acceptable Mismatches
+## revised_base_view — Known Acceptable Mismatches (2026-07-17)
 
-**Full detail:** `revised_base_view_validation_notes.md`
+**Full detail:** `SMAC Migration/Validation Docs/revised_base_view_validation_notes.md`
 
-- Row count: SAC 6.8M vs SMAC 3.2M (46.7%) — expected (monthly grain + history depth)
-- Join on `CREW_CODE` + experience keys — never ID columns
-- Exclude: all `*_ID`, `CDC_NUMBER`, `CONTACT_NUMBER`, `EMERGENCY_CONTACT_NUMBER`, `SAC_CONTRACT`, format columns
-- SAC bugs SMAC fixes: onboard `EXPERIENCE_IN_DAYS` datediff, `contract_agreements` swap, `CONTRACT_STATUS` derivation
-- Downstream: `planner_view` `REVISED_*` columns inherit these rules
+When validating `revised_base_view` or downstream `planner_view` (`REVISED_*` columns), **do not treat these as SMAC defects:**
+
+### Row count gap (expected — not a bug)
+- SAC **6,838,743** rows vs SMAC **3,190,731** (46.7%) — SMAC has less historical monthly grain + narrower dedup partition
+- **Do not fail** on table row-count ratio alone
+
+### SAC source issues (SMAC fixes them)
+1. **`EXPERIENCE_IN_DAYS` (onboard):** SAC `datediff(sign_on, current_date)` → negative; SMAC uses correct direction
+2. **Contract join v2 (2026-07-17):** Primary `contract_agreements` via `contract_agreement_id`; **fallback** when FK null → `seafarer_contracts` matched by `sign_on_date` + ranked `contract_agreements`. Resolves ~90% NULL FK gap without reverting to wrong table.
+3. **`CONTRACT_STATUS`:** SAC passthrough `vessel_contracts.STATUS`; SMAC maps `agreement_status` + `seafarer_contracts.status` to SAC-equivalent labels (`Void`, `InForce`, `Signed`, `Closed`)
+
+### Expected by design (exclude from defect reports)
+- All `*_ID` columns: INT → UUID (`SEAFARER_ID`, `SEA_EXPERIENCE_ID`, `RANK_ID`, `CONTRACT_ID`, `VESSEL_ID`, etc.)
+- `CDC_NUMBER`: prefix stripped (`IN-MUM…` → `MUM…`)
+- `CONTACT_NUMBER`: no country-code prefix in SMAC
+- `DATE_OF_BIRTH`: timestamp vs date string
+- `STATE` / `COUNTRY` / `NATIONALITY_NAME`: case or master naming (`INDIA`/`India`, `Indonesia`/`Indonesian`)
+- `EMERGENCY_CONTACT_NUMBER`: always NULL in SMAC
+- `SAC_CONTRACT`: always NULL in SMAC
+- `MONTHS`: many SAC monthly slices absent in SMAC (history gap) — downgrade, not auto-fail
+
+### Correct validation join keys
+`CREW_CODE` + `SIGN_ON_DATE` + `MONTHS` + `SIGN_OFF_DATE` + `VESSEL_NAME` — **never** compare on ID columns
+
+### Downstream
+`planner_view` `REVISED_*` columns inherit these rules. Relief columns (non-`REVISED_`) use `revised_relief_view_validation_notes.md`.
+
+---
+
+## revised_relief_view — Known Acceptable Mismatches (2026-07-17)
+
+**Full detail:** `SMAC Migration/Validation Docs/revised_relief_view_validation_notes.md`
+
+When validating `revised_relief_view` or downstream `planner_view` (relief columns), **do not treat these as SMAC defects:**
+
+### SAC source bugs (SMAC fixes them)
+1. **Reliever join bug in SAC:** alias `D` joins `RELIEVING_SEAFARER_ID` instead of `RELIEVER_SEAFARER_ID`. SAC duplicates offsigner into `RELIEVER_*`. SMAC correctly uses `onsigner_id` → D.
+2. **L join non-deterministic in SAC:** `PROPOSED_VESSEL_NAME` / `RELIEVER_SIGN_OFF_DATE` may pick wrong historical sea experience. SMAC uses latest onsigner experience (`ROW_NUMBER`).
+
+### Expected by design
+- All `*_ID` columns: INT → UUID (validate on `crew_code`, not ID)
+- `Relief Profile Link`: new domain + UUID
+- `RELIEF_STATE`: playbook maps `travel_planning` → `travelling` when departure signed
+- `RELIEVER_SF_STATUS_CODE`, `RELIEVING_SF_STATUS_CODE`, `TRAVEL_REPLAN_STATE`: always NULL in SMAC
+- `CDC_NUMBER`: prefix may differ (`IN-MUM…` vs `MUM…`)
+- `SHORTLISTED_SEAFARER_*`: SMAC populates from `relief_candidates`; SAC often NULL
+
+### Correct validation join keys
+`RELIEVE_CREW_CODE` + `VESSEL_NAME` + `RELIEF_CREATED_AT` (not ID columns)
 
 ---
 
@@ -128,9 +177,15 @@ The assistant will then automatically load it when working on SAC-to-SMAC migrat
 - Cross-system validation: JOIN on `crew_code`, never on ID
 
 ### 3. Contract Table (CRITICAL — MOST COMMON MISTAKE)
-- **WRONG**: `seafarer_contracts` (109K rows)
-- **CORRECT**: `contract_agreements` (448K rows) — has `start_date`, `end_date`, `status`
-- FK: `seafarer_sea_experiences.contract_agreement_id` → `contract_agreements.id`
+- **WRONG**: Joining only `seafarer_contracts` as primary contract source (109K rows)
+- **WRONG**: Relying only on `contract_agreement_id` FK (~90% NULL in curated data)
+- **CORRECT (v2 reporting join):**
+  1. Primary: `contract_agreements M` ON `M.id = J.contract_agreement_id AND M.deleted_at IS NULL`
+  2. Fallback: `seafarer_contracts SC_FB` ON `SC_FB.seafarer_id = B.id AND CAST(SC_FB.start_date AS DATE) = CAST(J.sign_on_date AS DATE) AND J.contract_agreement_id IS NULL`
+  3. Fallback agreement: ranked `contract_agreements M_FB` ON `M_FB.contract_id = SC_FB.id` (prefer Signed > Approved)
+  4. Dates: `COALESCE(M.*, M_FB.*, SC_FB.*)`; same logic in Y subquery for `LATEST_CONTRACT_END_DATE`
+- FK when populated: `seafarer_sea_experiences.contract_agreement_id` → `contract_agreements.id`
+- SAC parity: SAC joins `vessel_contracts` via `sea_experiences.CONTRACT_ID`; SMAC fallback via `seafarer_contracts` + agreement approximates that path
 
 ### 4. Engine Specifications JSON (PascalCase)
 ```json

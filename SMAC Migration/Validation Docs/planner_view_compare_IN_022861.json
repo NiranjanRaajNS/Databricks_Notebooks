@@ -1,0 +1,537 @@
+{
+  "crew": "IN-022861",
+  "match_count": 62,
+  "mismatch_count": 26,
+  "matches": [
+    [
+      "BULK_TYPE",
+      "Others",
+      "Others",
+      "MATCH"
+    ],
+    [
+      "CATEGORY_STATUS_BY_DAYS",
+      "A. Crew onboard within contract",
+      "A. Crew onboard within contract",
+      "MATCH"
+    ],
+    [
+      "COMBINED_BULK_TYPE",
+      "Others",
+      "Others",
+      "MATCH"
+    ],
+    [
+      "COMBINED_VESSEL_CATEGORY_NAME",
+      "CHEMICAL TANKER",
+      "CHEMICAL TANKER",
+      "MATCH"
+    ],
+    [
+      "COMBINED_VESSEL_NAME",
+      "GOLDEN CALYPSO",
+      "GOLDEN CALYPSO",
+      "MATCH"
+    ],
+    [
+      "CONTRACT_END_DATE",
+      "2027-01-07 00:00:00",
+      "2027-01-07 00:00:00",
+      "MATCH"
+    ],
+    [
+      "CONTRACT_START_DATE",
+      "2026-06-07 00:00:00",
+      "2026-06-07 00:00:00",
+      "MATCH"
+    ],
+    [
+      "CONTRACT_TENURE",
+      "7 Months",
+      "7 Months",
+      "MATCH"
+    ],
+    [
+      "CREW_CODE",
+      "IN-022861",
+      "IN-022861",
+      "MATCH"
+    ],
+    [
+      "DELAYED_MONTHS",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "DOC/CONTRACT_COMPANY",
+      "Synergy Pacific Private Limited",
+      "Synergy Pacific Private Limited",
+      "MATCH"
+    ],
+    [
+      "DOCUMENTATION_STATE",
+      "documentation_completed",
+      "documentation_completed",
+      "MATCH"
+    ],
+    [
+      "EXPIRY_DATE+1",
+      "2027-02-07 00:00:00",
+      "2027-02-07 00:00:00",
+      "MATCH"
+    ],
+    [
+      "EXPIRY_DATE-1",
+      "2026-12-07 00:00:00",
+      "2026-12-07 00:00:00",
+      "MATCH"
+    ],
+    [
+      "FLAG_DOCUMENTATION_STATE",
+      "documentation_completed",
+      "documentation_completed",
+      "MATCH"
+    ],
+    [
+      "GENERAL_DOCUMENTATION_STATE",
+      "documentation_completed",
+      "documentation_completed",
+      "MATCH"
+    ],
+    [
+      "MONTHS",
+      "2 Months",
+      "2 Months",
+      "MATCH"
+    ],
+    [
+      "NATIONALITY_NAME",
+      "Indian",
+      "Indian",
+      "MATCH"
+    ],
+    [
+      "Overdue by / Days left",
+      "INTERVAL '174' DAY DAYS",
+      "INTERVAL '174' DAY DAYS",
+      "MATCH"
+    ],
+    [
+      "POD_VESSEL_NAME",
+      "GOLDEN CALYPSO",
+      "GOLDEN CALYPSO",
+      "MATCH"
+    ],
+    [
+      "PROPOSED_VESSEL_NAME",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RANK_NAME",
+      "Second Officer",
+      "Second Officer",
+      "MATCH"
+    ],
+    [
+      "REASON",
+      "",
+      "",
+      "MATCH"
+    ],
+    [
+      "RELIEF_CREATED_AT",
+      "2026-06-16 21:51:29.890592",
+      "2026-06-16 21:51:29.890592",
+      "MATCH"
+    ],
+    [
+      "RELIEF_STATE",
+      "open",
+      "open",
+      "MATCH"
+    ],
+    [
+      "RELIEVER_FIRST_NAME",
+      "HIMANSHU",
+      "HIMANSHU",
+      "MATCH"
+    ],
+    [
+      "RELIEVER_LAST_NAME",
+      ".",
+      ".",
+      "MATCH"
+    ],
+    [
+      "RELIEVER_MIDDLE_NAME",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RELIEVER_SF_STATUS_CODE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RELIEVER_SIGN_OFF_DATE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RELIEVE_CREW_CODE",
+      "IN-022861",
+      "IN-022861",
+      "MATCH"
+    ],
+    [
+      "RELIEVE_FIRST_NAME",
+      "HIMANSHU",
+      "HIMANSHU",
+      "MATCH"
+    ],
+    [
+      "RELIEVE_GENDER_NAME",
+      "Male",
+      "Male",
+      "MATCH"
+    ],
+    [
+      "RELIEVE_LAST_NAME",
+      ".",
+      ".",
+      "MATCH"
+    ],
+    [
+      "RELIEVE_MIDDLE_NAME",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RELIEVING_SF_STATUS_CODE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "RELIEVING_TRAVEL_STATE",
+      "travel_planning_done",
+      "travel_planning_done",
+      "MATCH"
+    ],
+    [
+      "REVISED_AVAILABILITY_DATE",
+      "2026-06-01 00:00:00",
+      "2026-06-01 00:00:00",
+      "MATCH"
+    ],
+    [
+      "REVISED_BULK_TYPE",
+      "Others",
+      "Others",
+      "MATCH"
+    ],
+    [
+      "REVISED_CREW_CODE",
+      "IN-022861",
+      "IN-022861",
+      "MATCH"
+    ],
+    [
+      "REVISED_FIRST_NAME",
+      "HIMANSHU",
+      "HIMANSHU",
+      "MATCH"
+    ],
+    [
+      "REVISED_GENDER_NAME",
+      "Male",
+      "Male",
+      "MATCH"
+    ],
+    [
+      "REVISED_LAST_NAME",
+      ".",
+      ".",
+      "MATCH"
+    ],
+    [
+      "REVISED_LATEST_CONTRACT_END_DATE",
+      "2027-01-07 00:00:00",
+      "2027-01-07 00:00:00",
+      "MATCH"
+    ],
+    [
+      "REVISED_LATEST_DATE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "REVISED_LATEST_SIGN_OFF_DATE",
+      "2025-12-16 00:00:00",
+      "2025-12-16 00:00:00",
+      "MATCH"
+    ],
+    [
+      "REVISED_MIDDLE_NAME",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "REVISED_NATIONALITY_NAME",
+      "Indian",
+      "Indian",
+      "MATCH"
+    ],
+    [
+      "REVISED_PROFILE_STATUS",
+      "Active Seafarer",
+      "Active Seafarer",
+      "MATCH"
+    ],
+    [
+      "REVISED_RANK_NAME",
+      "Second Officer",
+      "Second Officer",
+      "MATCH"
+    ],
+    [
+      "REVISED_current_status",
+      "Sign On",
+      "Sign On",
+      "MATCH"
+    ],
+    [
+      "ROW_NUM1",
+      "1",
+      "1",
+      "MATCH"
+    ],
+    [
+      "Rank Category",
+      "Officer",
+      "Officer",
+      "MATCH"
+    ],
+    [
+      "Revised Rank Category",
+      "Officer",
+      "Officer",
+      "MATCH"
+    ],
+    [
+      "SHORTLISTED_SEAFARER_MIDDLE_NAME",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "SIGN_OFF_DATE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "SIGN_ON_DATE",
+      "2026-06-08 00:00:00",
+      "2026-06-08 00:00:00",
+      "MATCH"
+    ],
+    [
+      "TRAVEL_REPLAN_STATE",
+      null,
+      null,
+      "MATCH"
+    ],
+    [
+      "VESSEL_CATEGORY_NAME",
+      "CHEMICAL TANKER",
+      "CHEMICAL TANKER",
+      "MATCH"
+    ],
+    [
+      "VESSEL_FLEET_TYPE",
+      "WET",
+      "WET",
+      "MATCH"
+    ],
+    [
+      "VESSEL_IMO_NUMBER",
+      "1037713",
+      "1037713",
+      "MATCH"
+    ],
+    [
+      "VESSEL_NAME",
+      "GOLDEN CALYPSO",
+      "GOLDEN CALYPSO",
+      "MATCH"
+    ]
+  ],
+  "mismatches": [
+    [
+      "CDC_NUMBER",
+      "IN-MUM276375",
+      "MUM276375",
+      "MISMATCH"
+    ],
+    [
+      "COMBINED_CDC_NUMBER",
+      "IN-MUM276375",
+      "MUM276375",
+      "MISMATCH"
+    ],
+    [
+      "ONSIGNER_RANK_ID",
+      "15",
+      "ae665bcf-63b4-4420-9d97-85de70edde14",
+      "MISMATCH"
+    ],
+    [
+      "POD_NAME",
+      "All Synergy Vessels",
+      "Wet-Fleet F",
+      "MISMATCH"
+    ],
+    [
+      "RELIEVER_CREW_CODE",
+      "IN-022861",
+      null,
+      "MISMATCH"
+    ],
+    [
+      "RELIEVER_GENDER_NAME",
+      "Male",
+      "Unknown",
+      "MISMATCH"
+    ],
+    [
+      "RELIEVER_SEAFARER_ID",
+      "38586",
+      null,
+      "MISMATCH"
+    ],
+    [
+      "RELIEVER_TRAVEL_STATE",
+      "travel_planning_done",
+      null,
+      "MISMATCH"
+    ],
+    [
+      "RELIEVE_SEAFARER_ID",
+      "38586",
+      "00045b27-aa40-4f49-8bdc-d3f81aba325f",
+      "MISMATCH"
+    ],
+    [
+      "RELIVER_AVAILABILITY_DATE",
+      "2026-06-01 00:00:00",
+      null,
+      "MISMATCH"
+    ],
+    [
+      "REVISED_CDC_NUMBER",
+      "IN-MUM276375",
+      "MUM276375",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_CONTRACT_END_DATE",
+      "2025-01-07 00:00:00",
+      "2025-11-07 00:00:00",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_SEAFARER_ID",
+      "38586",
+      "00045b27-aa40-4f49-8bdc-d3f81aba325f",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_SHIP_MANAGEMENT_COMPANY_NAME",
+      "SYNERGY NAVIS MARINE PVT LTD",
+      "SYNERGY PACIFIC PRIVATE LIMITED",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_SIGN_OFF_DATE",
+      "2025-01-09 00:00:00",
+      "2025-07-31 00:00:00",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_SIGN_OFF_REASON",
+      "End of Contract",
+      "Promotion",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_SIGN_ON_DATE",
+      "2024-06-07 00:00:00",
+      "2025-05-08 00:00:00",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_VESSEL_NAME",
+      "BOW PANTHER",
+      "BOW CHEETAH",
+      "MISMATCH"
+    ],
+    [
+      "REVISED_VESSEL_TYPE",
+      "OIL / CHEM PROD TANKER",
+      "CHEMICAL TANKER",
+      "MISMATCH"
+    ],
+    [
+      "Relief Profile Link",
+      "https://manning.synergymarine.in/relief/detail/141262",
+      "https://crewing.synergymarine.in/crewing/manning/relief/detail/736e75bf-b6d2-4ef5-adca-ab52026c1284",
+      "MISMATCH"
+    ],
+    [
+      "Revised Overdue by / Days left",
+      "-556 DAYS",
+      "-252 DAYS",
+      "MISMATCH"
+    ],
+    [
+      "SEAFARER_ID",
+      "38586",
+      "00045b27-aa40-4f49-8bdc-d3f81aba325f",
+      "MISMATCH"
+    ],
+    [
+      "SHORTLISTED_SEAFARER_FIRST_NAME",
+      null,
+      "HIMANSHU",
+      "MISMATCH"
+    ],
+    [
+      "SHORTLISTED_SEAFARER_LAST_NAME",
+      null,
+      ".",
+      "MISMATCH"
+    ],
+    [
+      "SIGN_ON_PORT_ID",
+      "7386",
+      null,
+      "MISMATCH"
+    ],
+    [
+      "VESSEL_CONTRACT_ID",
+      "135043",
+      "0c193e23-cde4-42da-985a-9d592c02012b",
+      "MISMATCH"
+    ]
+  ]
+}

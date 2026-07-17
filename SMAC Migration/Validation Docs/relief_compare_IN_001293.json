@@ -1,0 +1,264 @@
+{
+  "crew_code": "IN-001293",
+  "columns_compared": 59,
+  "matches": 41,
+  "mismatches": 18,
+  "mismatch_details": [
+    {
+      "column": "CDC_NUMBER",
+      "sac": "IN-MUM273949",
+      "smac": "MUM273949"
+    },
+    {
+      "column": "PROPOSED_VESSEL_NAME",
+      "sac": "HAFNIA LUPUS",
+      "smac": "DEIRA GHAIR"
+    },
+    {
+      "column": "RELIEVER_SIGN_OFF_DATE",
+      "sac": "2025-10-08 00:00:00",
+      "smac": null
+    },
+    {
+      "column": "SEAFARER_ID",
+      "sac": "11175",
+      "smac": "62442a15-6a38-4493-9f0c-5fc00543e776"
+    },
+    {
+      "column": "VESSEL_CONTRACT_ID",
+      "sac": "129090",
+      "smac": "9f23fe02-60f4-4d58-b5ff-4662a5da008e"
+    },
+    {
+      "column": "RELIEF_STATE",
+      "sac": "travel_planning",
+      "smac": "travelling"
+    },
+    {
+      "column": "ONSIGNER_RANK_ID",
+      "sac": "23",
+      "smac": "43ede6b7-b03d-4f0d-aa20-8a3ae3f22030"
+    },
+    {
+      "column": "SIGN_ON_PORT_ID",
+      "sac": "212",
+      "smac": null
+    },
+    {
+      "column": "RELIEVER_SEAFARER_ID",
+      "sac": "11175",
+      "smac": "b446484c-abaa-425d-82b1-9965e085e51c"
+    },
+    {
+      "column": "RELIEVER_CREW_CODE",
+      "sac": "IN-001293",
+      "smac": "IN-010592"
+    },
+    {
+      "column": "RELIEVER_FIRST_NAME",
+      "sac": "IRUTHAYARAJ",
+      "smac": "KARTHIKEYAN"
+    },
+    {
+      "column": "RELIEVER_LAST_NAME",
+      "sac": "THOMAS",
+      "smac": "SHANMUGAM"
+    },
+    {
+      "column": "RELIEVE_SEAFARER_ID",
+      "sac": "11175",
+      "smac": "62442a15-6a38-4493-9f0c-5fc00543e776"
+    },
+    {
+      "column": "Relief Profile Link",
+      "sac": "https://manning.synergymarine.in/relief/detail/134082",
+      "smac": "https://crewing.synergymarine.in/crewing/manning/relief/detail/5b98fc2b-59ba-4925-962b-c500bcff6a49"
+    },
+    {
+      "column": "RELIVER_AVAILABILITY_DATE",
+      "sac": null,
+      "smac": "2026-04-15 00:00:00"
+    },
+    {
+      "column": "SHORTLISTED_SEAFARER_FIRST_NAME",
+      "sac": null,
+      "smac": "KARTHIKEYAN"
+    },
+    {
+      "column": "SHORTLISTED_SEAFARER_LAST_NAME",
+      "sac": null,
+      "smac": "SHANMUGAM"
+    },
+    {
+      "column": "POD_NAME",
+      "sac": "Philippines Vessels (SGOI)",
+      "smac": "Fleet (Ilaiyakumar M)"
+    }
+  ],
+  "match_details": [
+    {
+      "column": "CONTRACT_START_DATE",
+      "value": "2026-03-14 00:00:00"
+    },
+    {
+      "column": "CONTRACT_END_DATE",
+      "value": "2026-09-14 00:00:00"
+    },
+    {
+      "column": "CREW_CODE",
+      "value": "IN-001293"
+    },
+    {
+      "column": "SIGN_ON_DATE",
+      "value": "2026-03-15 00:00:00"
+    },
+    {
+      "column": "SIGN_OFF_DATE",
+      "value": ""
+    },
+    {
+      "column": "VESSEL_NAME",
+      "value": "DEIRA GHAIR"
+    },
+    {
+      "column": "VESSEL_CATEGORY_NAME",
+      "value": "CHEM/PROD TANKER"
+    },
+    {
+      "column": "BULK_TYPE",
+      "value": "Others"
+    },
+    {
+      "column": "RANK_NAME",
+      "value": "Electrical Officer"
+    },
+    {
+      "column": "DOC/CONTRACT_COMPANY",
+      "value": "Synergy Marine Copenhagen A/S"
+    },
+    {
+      "column": "Overdue by / Days left",
+      "value": "INTERVAL '60' DAY DAYS"
+    },
+    {
+      "column": "NATIONALITY_NAME",
+      "value": "Indian"
+    },
+    {
+      "column": "VESSEL_IMO_NUMBER",
+      "value": "9617959"
+    },
+    {
+      "column": "RELIEVER_SF_STATUS_CODE",
+      "value": ""
+    },
+    {
+      "column": "RELIEVING_SF_STATUS_CODE",
+      "value": ""
+    },
+    {
+      "column": "REASON",
+      "value": ""
+    },
+    {
+      "column": "RELIEF_CREATED_AT",
+      "value": "2026-03-30 09:58:26.482367"
+    },
+    {
+      "column": "RELIEVER_TRAVEL_STATE",
+      "value": "travel_planning_done"
+    },
+    {
+      "column": "FLAG_DOCUMENTATION_STATE",
+      "value": "documentation_completed"
+    },
+    {
+      "column": "DOCUMENTATION_STATE",
+      "value": "documentation_completed"
+    },
+    {
+      "column": "GENERAL_DOCUMENTATION_STATE",
+      "value": "documentation_completed"
+    },
+    {
+      "column": "TRAVEL_REPLAN_STATE",
+      "value": ""
+    },
+    {
+      "column": "RELIEVING_TRAVEL_STATE",
+      "value": "travel_planning_done"
+    },
+    {
+      "column": "RELIEVER_MIDDLE_NAME",
+      "value": ""
+    },
+    {
+      "column": "RELIEVE_CREW_CODE",
+      "value": "IN-001293"
+    },
+    {
+      "column": "RELIEVE_FIRST_NAME",
+      "value": "IRUTHAYARAJ"
+    },
+    {
+      "column": "RELIEVE_MIDDLE_NAME",
+      "value": ""
+    },
+    {
+      "column": "RELIEVE_LAST_NAME",
+      "value": "THOMAS"
+    },
+    {
+      "column": "CATEGORY_STATUS_BY_DAYS",
+      "value": "A. Crew onboard within contract"
+    },
+    {
+      "column": "CONTRACT_TENURE",
+      "value": "6 Months"
+    },
+    {
+      "column": "MONTHS",
+      "value": "5 Months"
+    },
+    {
+      "column": "EXPIRY_DATE+1",
+      "value": "2026-10-14 00:00:00"
+    },
+    {
+      "column": "EXPIRY_DATE-1",
+      "value": "2026-08-14 00:00:00"
+    },
+    {
+      "column": "Rank Category",
+      "value": "Officer"
+    },
+    {
+      "column": "VESSEL_FLEET_TYPE",
+      "value": "WET"
+    },
+    {
+      "column": "SHORTLISTED_SEAFARER_MIDDLE_NAME",
+      "value": ""
+    },
+    {
+      "column": "POD_VESSEL_NAME",
+      "value": "DEIRA GHAIR"
+    },
+    {
+      "column": "RELIEVER_GENDER_NAME",
+      "value": "Male"
+    },
+    {
+      "column": "RELIEVE_GENDER_NAME",
+      "value": "Male"
+    },
+    {
+      "column": "DELAYED_MONTHS",
+      "value": ""
+    },
+    {
+      "column": "ROW_NUM",
+      "value": "1"
+    }
+  ]
+}
