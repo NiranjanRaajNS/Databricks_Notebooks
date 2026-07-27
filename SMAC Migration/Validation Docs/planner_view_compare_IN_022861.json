@@ -445,8 +445,8 @@
     ],
     [
       "REVISED_CONTRACT_END_DATE",
-      "2025-01-07 00:00:00",
-      "2025-11-07 00:00:00",
+      null,
+      "2024-12-07 00:00:00",
       "MISMATCH"
     ],
     [
@@ -457,38 +457,38 @@
     ],
     [
       "REVISED_SHIP_MANAGEMENT_COMPANY_NAME",
+      "0THER",
       "SYNERGY NAVIS MARINE PVT LTD",
-      "SYNERGY PACIFIC PRIVATE LIMITED",
       "MISMATCH"
     ],
     [
       "REVISED_SIGN_OFF_DATE",
+      "2021-11-05 00:00:00",
       "2025-01-09 00:00:00",
-      "2025-07-31 00:00:00",
       "MISMATCH"
     ],
     [
       "REVISED_SIGN_OFF_REASON",
       "End of Contract",
-      "Promotion",
+      "End Of Contract",
       "MISMATCH"
     ],
     [
       "REVISED_SIGN_ON_DATE",
+      "2021-06-12 00:00:00",
       "2024-06-07 00:00:00",
-      "2025-05-08 00:00:00",
       "MISMATCH"
     ],
     [
       "REVISED_VESSEL_NAME",
+      "GULF HORIZON",
       "BOW PANTHER",
-      "BOW CHEETAH",
       "MISMATCH"
     ],
     [
       "REVISED_VESSEL_TYPE",
-      "OIL / CHEM PROD TANKER",
-      "CHEMICAL TANKER",
+      "OIL TANKER",
+      "CHEM/PROD TANKER",
       "MISMATCH"
     ],
     [
@@ -499,8 +499,8 @@
     ],
     [
       "Revised Overdue by / Days left",
-      "-556 DAYS",
-      "-252 DAYS",
+      null,
+      "-587 DAYS",
       "MISMATCH"
     ],
     [
