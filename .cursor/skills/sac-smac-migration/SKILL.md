@@ -215,6 +215,42 @@ CONCAT(COALESCE(get_json_object(cargo_capacity_info, '$.capacity'), ''), ' ', CO
 - SMAC: separate rows in `seafarer_appraisal_forms` (joined via `appraisal_id`)
 - SAC `templateName` → SMAC `appraisal_stages.name` (via `stage_id`)
 - SAC `rating` → SMAC `seafarer_appraisal_forms.average_score`
+- **Initiated By** (2026-07-29 fix): resolve via FK, not `audit_info.notes` regex —
+  `seafarer_appraisals.initiated_by` → `curated_db.db_smac_prod_navitasai_idp_public.user_profiles.id`
+  → `TRIM(CONCAT_WS(' ', first_name, last_name))`. ~79% FK coverage; keep the old regex as a
+  `COALESCE` fallback for the unresolved remainder. The regex-only version can return a garbled
+  value (SAC's own `CREATED_BY_NAME` for this same field has a similar bug — concatenated
+  name+email), while the FK path returns the clean actual name.
+- **Appraiser / reviewer name per stage** (2026-07-29 fix): resolve via
+  `seafarer_appraisal_forms.assigned_to_user_id`, branching on `stage_type` / `assigned_to_user_type`
+  — see the "Appraiser Name from Forms" pattern below. Do **not** join `assigned_to_user_id` directly
+  for the Appraisee stage — it's an empty GUID (`00000000-...`) there by design/migration; resolve the
+  appraisee's own name instead from the parent appraisal (`seafarer_appraisals.seafarer_id` + `rank_id`
+  for a `"(Master)"` style suffix). Keep the old `audit_info.notes` regex as a fallback.
+- **FEEDBACK_COMMENTS** (2026-07-29 fix): prefer `seafarer_appraisal_forms.confirmation_data` →
+  `$.Remarks` — this is the appraiser's final sign-off comment and is the field SAC's report actually
+  reflects (confirmed by an exact-text match against a known-good SAC value). The old approach (regex
+  over `submission_data.$.data` for keys containing "remark(s)") only catches section-level remarks
+  and covers ~14% of forms; `confirmation_data.Remarks` alone covers ~39%, ~43% combined via
+  `COALESCE`. Keep the old regex as the fallback — it's still needed for stages without
+  `confirmation_data` (e.g. Appraisee Acknowledgement, whose remark lives at
+  `submission_data.$.data.appraiseeRemarks`). Note: SAC's own `FEEDBACK_COMMENTS` has a real bug for
+  older/legacy-schema records — its extraction grabs whatever JSON key happens to be *last* in an
+  unordered map (`element_at(map_keys(...), -1)`), which for grid/matrix-style form fields surfaces
+  garbage like `{"Row 1":{"Column 1":"Item 3"},...}` instead of the actual remark. When SMAC's
+  `confirmation_data.Remarks` produces a real sentence and SAC shows that JSON-blob pattern, SMAC is
+  correct and SAC is the one with the defect — don't try to reproduce SAC's blob to force a match.
+  **2026-07-29 backport:** this fix originally only landed in `add_digital_appraisal_view`;
+  `digital_appraisal_view`'s 6 per-stage `*_Comment` columns were still on the old regex-only
+  path (spot-checked via crew `UA-000576` — Crewing/Marine Superintendent comments were `NULL` in
+  SMAC vs populated in SAC). Backported the same `COALESCE(confirmation_data.Remarks, regex
+  fallback)` into all 6 stage comment columns and reran `CREATE OR REPLACE TABLE
+  reporting_layer.smac_prod.digital_appraisal_view`. Non-null comment coverage went from ~14% to
+  roughly SAC parity (SAC 2,770 rows: Crewing 64%/Marine 57%/Technical 61% non-null; SMAC 2,883 rows
+  post-fix: Crewing 56%/Marine 49%/Technical 52% non-null — remaining gap is forms genuinely lacking
+  both `confirmation_data` and a `submission_data` remark, not a defect). If re-validating
+  `digital_appraisal_view` comment columns and still seeing near-zero non-null rates, the fix may not
+  have been applied — check the table's actual `CREATE TABLE` logic, not just the notebook.
 
 ### 10. Inactive Seafarer Identification
 - SAC: `SEAFARER_REMARKS.profile_remark[0].remark_type = 'INACTIVE'`
@@ -258,19 +294,43 @@ AS
 SELECT ...
 ```
 
-### Name Extraction from audit_info
+### Initiated By (FK resolution, with audit_info regex fallback)
 ```sql
-REGEXP_EXTRACT(get_json_object(audit_info, '$.notes'), 'Created by:\\s*(?:AHOY-)?([^;-]+)', 1) AS Initiated_by
+COALESCE(
+  NULLIF(TRIM(CONCAT_WS(' ', IB.first_name, IB.last_name)), ''),
+  NULLIF(REGEXP_EXTRACT(get_json_object(ap.audit_info, '$.notes'), 'Created by:\\s*(?:AHOY-)?([^;-]+)', 1), '')
+) AS Intiated_by
+-- LEFT JOIN curated_db.db_smac_prod_navitasai_idp_public.user_profiles IB ON IB.id = ap.initiated_by
 ```
 
-### Appraiser Name from Forms
+### Appraiser Name from Forms (FK resolution, with audit_info regex fallback)
 ```sql
-REGEXP_REPLACE(COALESCE(get_json_object(f.audit_info, '$.notes'), ''), '^Appraiser:\\s*', '') AS appraiser_name
+COALESCE(
+  NULLIF(
+    CASE
+      WHEN UPPER(TRIM(f.stage_type)) = 'APPRAISEE' THEN
+        CONCAT(TRIM(CONCAT_WS(' ', SF.first_name, SF.middle_name, SF.last_name)),
+               CASE WHEN R.name IS NOT NULL THEN CONCAT(' (', R.name, ')') ELSE '' END)
+      WHEN UPPER(TRIM(f.assigned_to_user_type)) = 'SHORE' THEN
+        TRIM(CONCAT_WS(' ', UP_ASG.first_name, UP_ASG.last_name))
+      ELSE
+        TRIM(CONCAT_WS(' ', S_ASG.first_name, S_ASG.middle_name, S_ASG.last_name))
+    END,
+    ''
+  ),
+  NULLIF(REGEXP_REPLACE(COALESCE(get_json_object(f.audit_info, '$.notes'), ''), '^Appraiser:\\s*', ''), '')
+) AS appraiser_name
+-- SF/R = the parent appraisal's seafarer (ap.seafarer_id) / rank (ap.rank_id), already joined for other columns
+-- LEFT JOIN ...idp_public.user_profiles UP_ASG ON UP_ASG.id = f.assigned_to_user_id AND UPPER(TRIM(f.assigned_to_user_type))='SHORE' AND UPPER(TRIM(f.stage_type))<>'APPRAISEE'
+-- LEFT JOIN ...crewing_public.seafarers S_ASG ON S_ASG.id = f.assigned_to_user_id AND UPPER(TRIM(f.assigned_to_user_type))='SEAFARER' AND UPPER(TRIM(f.stage_type))<>'APPRAISEE'
 ```
 
-### Feedback Comments Extraction
+### Feedback Comments Extraction (confirmation_data.Remarks first, $.data regex fallback)
 ```sql
-NULLIF(array_join(regexp_extract_all(COALESCE(get_json_object(f.submission_data, '$.data'), ''), '"[^"]*[Rr]emarks?"\\s*:\\s*"([^"]+)"', 1), '; '), '') AS FEEDBACK_COMMENTS
+COALESCE(
+  NULLIF(get_json_object(f.confirmation_data, '$.Remarks'), ''),
+  NULLIF(array_join(regexp_extract_all(COALESCE(get_json_object(f.submission_data, '$.data'), ''), '"[^"]*[Rr]emarks?"\\s*:\\s*"([^"]+)"', 1), '; '), '')
+) AS FEEDBACK_COMMENTS
 ```
 
 ### Performance Rating
@@ -289,7 +349,7 @@ ROUND(AVG(f.average_score), 2) AS performance_rating
 | 2 | `appraisals_data` | 144,848 | 142,300 | 98.2% |
 | 3 | `revised_relief_view` | 20,724 | 20,769 | 100.2% |
 | 4 | `planner_view` | 78,177 | 78,604 | 100.5% |
-| 5 | `add_digital_appraisal_view` | 26,485 | 28,706 | 108% |
+| 5 | `add_digital_appraisal_view` | 26,485 | 30,588 | 115.5% (grows with new appraisals; Initiated By / appraiser name switched to FK resolution 2026-07-29) |
 | 6 | `appraisal_performance` | 576 | 547 | 95.0% |
 | 7 | `digital_appraisal_view` | 2,637 | 2,788 | 105.7% |
 | 8 | `inactive_seafarers` | 10,439 | 13,970 | 133.8% |
